@@ -34,7 +34,7 @@ public class Livro {
 	private Biblioteca biblioteca;
 	
 	public Livro() {}
-
+	
 	public Livro(Long id, String nome, Integer paginas, List<Autor> autores) {
 		this.id = id;
 		this.nome = nome;

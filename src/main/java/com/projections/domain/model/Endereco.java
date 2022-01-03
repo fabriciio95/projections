@@ -29,6 +29,8 @@ public class Endereco {
 	
 	@OneToOne
 	private Biblioteca biblioteca;
+	
+	public Endereco() {}
 
 	public Endereco(Long id, String cep, String logradouro, String numero, String bairro, String cidade, String estado,
 			Biblioteca biblioteca) {
