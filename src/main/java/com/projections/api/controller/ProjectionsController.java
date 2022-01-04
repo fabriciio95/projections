@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.projections.domain.model.Biblioteca;
 import com.projections.domain.model.Livro;
 import com.projections.domain.projection.ProjecaoBibliotecaDTOSpringDataJPaRepository;
 import com.projections.domain.projection.dto.LivroDTO;
@@ -15,6 +17,7 @@ import com.projections.domain.projection.dto.ProjecaoAutorDTOAninhadoSpringDataJ
 import com.projections.domain.projection.dto.ProjecaoAutorDTOSpringDataJPARepository;
 import com.projections.domain.projection.dto.ProjecaoBibliotecaDTOSpringDataJPa;
 import com.projections.domain.projection.dto.ProjecaoLivroDTOSpringDataJPARepository;
+import com.projections.domain.projection.entity.ProjecaoEntidadeSpringDataJPA;
 
 @RestController
 @RequestMapping("/projections")
@@ -28,6 +31,9 @@ public class ProjectionsController {
 	
 	@Autowired
 	private ProjecaoBibliotecaDTOSpringDataJPaRepository projecaoBiblioteca;
+	
+	@Autowired
+	private ProjecaoEntidadeSpringDataJPA projecaoBiliotecaEntidade;
 	
 	@GetMapping("/livros")
 	public List<Livro> listarLivros() {
@@ -61,6 +67,11 @@ public class ProjectionsController {
 		ProjecaoAutorDTOAninhadoSpringDataJPA autor =  projecaoAutor.getByNome(nome);
 		
 		return autor;
+	}
+	
+	@GetMapping("/bibliotecas/{nome}")
+	public List<Biblioteca> listarBibliotecasPorNome(@PathVariable String nome) {
+		return projecaoBiliotecaEntidade.findByNomeContainingIgnoreCase(nome);
 	}
 	
 	

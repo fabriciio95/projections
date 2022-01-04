@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class Biblioteca {
 
@@ -20,9 +22,11 @@ public class Biblioteca {
 	
 	private String nome;
 	
+	@JsonIgnoreProperties("biblioteca")
 	@OneToOne(mappedBy = "biblioteca")
 	private Endereco endereco;
 	
+	@JsonIgnoreProperties("biblioteca")
 	@OneToMany(mappedBy = "biblioteca")
 	private List<Livro> livros = new ArrayList<>();
 	
