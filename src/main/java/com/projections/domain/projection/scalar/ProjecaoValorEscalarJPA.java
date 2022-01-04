@@ -1,4 +1,4 @@
-package com.projections.domain.projection.scalarvalue;
+package com.projections.domain.projection.scalar;
 
 import java.util.ArrayList;
 import java.util.List;
