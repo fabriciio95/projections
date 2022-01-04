@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,14 +12,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.projections.domain.model.Livro;
 import com.projections.domain.projection.dto.LivroDTO;
 import com.projections.domain.projection.dto.LivroProjecao;
-import com.projections.domain.projection.dto.ProjecaoDTOSpringDataJPA;
+import com.projections.domain.projection.dto.ProjecaoAutorDTOAninhadoSpringDataJPA;
+import com.projections.domain.projection.dto.ProjecaoAutorDTOSpringDataJPARepository;
+import com.projections.domain.projection.dto.ProjecaoLivroDTOSpringDataJPARepository;
 
 @RestController
 @RequestMapping("/projections")
 public class ProjectionsController {
 
 	@Autowired
-	private ProjecaoDTOSpringDataJPA projecao;
+	private ProjecaoLivroDTOSpringDataJPARepository projecaoLivro;
+	
+	@Autowired
+	private ProjecaoAutorDTOSpringDataJPARepository projecaoAutor;
 	
 	@GetMapping("/livros")
 	public List<Livro> listarLivros() {
@@ -31,7 +37,7 @@ public class ProjectionsController {
 //			return livro;
 //		}).toList();
 		
-		return projecao.listarLivros().stream().map(livroDTO -> {
+		return projecaoLivro.listarLivros().stream().map(livroDTO -> {
 			Livro livro = new Livro();
 			livro.setNome(livroDTO.getNome());
 			livro.setPaginas(livroDTO.getPaginas());
@@ -42,7 +48,15 @@ public class ProjectionsController {
 	
 	@GetMapping("/livros/search")
 	public List<LivroDTO> listarLivrosPorNome(@RequestParam("nome") String nome) {
-		return projecao.findByNome(nome);
+		return projecaoLivro.findByNome(nome);
 		//return projecao.getByNome(nome);
+	}
+	
+	@GetMapping("/autores/search")
+	public ProjecaoAutorDTOAninhadoSpringDataJPA buscarAutorPorId(@RequestParam("nome") String nome) {
+		
+		ProjecaoAutorDTOAninhadoSpringDataJPA autor =  projecaoAutor.getByNome(nome);
+		
+		return autor;
 	}
 }

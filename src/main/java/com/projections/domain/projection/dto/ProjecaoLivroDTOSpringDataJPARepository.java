@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.projections.domain.model.Livro;
 
 @Repository
-public interface ProjecaoDTOSpringDataJPA extends CrudRepository<Livro, Long>{
+public interface ProjecaoLivroDTOSpringDataJPARepository extends CrudRepository<Livro, Long>{
 
 	@Query("SELECT new com.projections.domain.projection.dto.LivroDTO(l.nome, l.paginas) FROM Livro l")
 	List<LivroDTO> listarLivros();
