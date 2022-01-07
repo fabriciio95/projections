@@ -18,4 +18,6 @@ public interface ProjecaoLivroDTOSpringDataJPARepository extends CrudRepository<
 	
 	List<LivroProjecao> getByNome(String nome);
 	
+	<T> T queryByNome(String nome, Class<T> type);
+	
 }

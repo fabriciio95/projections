@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.projections.domain.model.Biblioteca;
 import com.projections.domain.model.Livro;
 import com.projections.domain.projection.ProjecaoBibliotecaDTOSpringDataJPaRepository;
+import com.projections.domain.projection.dto.BibliotecaDTOInterfaceProjection;
+import com.projections.domain.projection.dto.BibliotecaDTOInterfaceProjection2;
 import com.projections.domain.projection.dto.LivroDTO;
+import com.projections.domain.projection.dto.LivroDTO2;
 import com.projections.domain.projection.dto.ProjecaoAutorDTOAninhadoSpringDataJPA;
 import com.projections.domain.projection.dto.ProjecaoAutorDTOSpringDataJPARepository;
 import com.projections.domain.projection.dto.ProjecaoBibliotecaDTOSpringDataJPa;
@@ -61,6 +64,17 @@ public class ProjectionsController {
 		//return projecao.getByNome(nome);
 	}
 	
+	@GetMapping("/livros/dto/{nome}")
+	public LivroDTO buscarLivrosPorNome(@PathVariable String nome) {
+		return projecaoLivro.queryByNome(nome, LivroDTO.class);
+	}
+	
+	@GetMapping("/livros/dto2/{nome}")
+	public LivroDTO2 buscarLivrosPorNome2(@PathVariable String nome) {
+		return projecaoLivro.queryByNome(nome, LivroDTO2.class);
+	}
+	
+	
 	@GetMapping("/autores/search")
 	public ProjecaoAutorDTOAninhadoSpringDataJPA buscarAutorPorId(@RequestParam("nome") String nome) {
 		
@@ -69,9 +83,19 @@ public class ProjectionsController {
 		return autor;
 	}
 	
-	@GetMapping("/bibliotecas/{nome}")
+	@GetMapping("/bibliotecas/entidades/{nome}")
 	public List<Biblioteca> listarBibliotecasPorNome(@PathVariable String nome) {
 		return projecaoBiliotecaEntidade.findByNomeContainingIgnoreCase(nome);
+	}
+	
+	@GetMapping("/bibliotecas/dto/{nome}")
+	public BibliotecaDTOInterfaceProjection listarBibliotecasDTOPorNome(@PathVariable String nome) {
+		return projecaoBiliotecaEntidade.findByNome(nome, BibliotecaDTOInterfaceProjection.class);
+	}
+	
+	@GetMapping("/bibliotecas/dto2/{nome}")
+	public BibliotecaDTOInterfaceProjection2 listarBibliotecasDTOPorNome2(@PathVariable String nome) {
+		return projecaoBiliotecaEntidade.findByNome(nome, BibliotecaDTOInterfaceProjection2.class);
 	}
 	
 	
